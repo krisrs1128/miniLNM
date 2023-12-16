@@ -1,0 +1,38 @@
+---
+title: "demo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(miniLNM)
+library(tidyverse)
+```
+
+```{r}
+example_data <- lnm_data()
+xy <- bind_cols(example_data[c("X", "y")])
+fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+```
+
+```{r}
+p_hat <- predict(fit)
+y_star <- sample(fit, depth = 200)
+```
+
+```{r}
+newx <- lnm_data()$X
+p_hat <- predict(fit, newx)
+y_star <- sample(fit, newdata = newx, depth = 200)
+```
+
