@@ -99,6 +99,7 @@ lnm_predict <- function(object, newdata = NULL, ...) {
   phi_inverse(newdata %*% beta_mean(object))
 }
 
+#' @importFrom formula.tools lhs
 lnm_sample <- function(x, size = 1, depth = 1e4, newdata = NULL) {
   newdata <- prepare_newdata(x, newdata)
   b_star <- beta_samples(x, nrow(newdata))
@@ -108,7 +109,10 @@ lnm_sample <- function(x, size = 1, depth = 1e4, newdata = NULL) {
     probs[i, ] <- phi_inverse(newdata[i, ] %*% b_star[[i]])
   }
 
-  t(apply(probs, 1, \(p) rmultinom(1, depth, p)))
+  # sample and return
+  y_star <- t(apply(probs, 1, \(p) rmultinom(1, depth, p)))
+  colnames(y_star) <- terms(lhs(x@formula))
+  y_star
 }
 
 #' @export
