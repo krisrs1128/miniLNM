@@ -31,6 +31,6 @@ void outcome_y_lp(array[,] int y, int N, matrix mu, int K) {
 }
 
 vector phi_inv(row_vector mu) {
-  vector[num_elements(mu) + 1] mu_ = append_row(mu', 0.0);
+  vector[1 + num_elements(mu)] mu_ = append_row(0.0, mu');
   return softmax(mu_);
 }

@@ -41,7 +41,7 @@ phi_inverse <- function(mu) {
 
 phi_inverse_ <- function(mu) {
   sum_exp <- sum(exp(mu))
-  c(exp(mu) / (1 + sum_exp), 1 / (1 + sum_exp))
+  c(1 / (1 + sum_exp), exp(mu) / (1 + sum_exp))
 }
 
 #' @importFrom dplyr select matches
@@ -62,33 +62,25 @@ prepare_newdata <- function(fit, newdata = NULL) {
     as.matrix()
 }
 
-#' @importFrom stringr str_extract
-parse_nrow <- function(nm) {
-  str_extract(nm, "[0-9]+") |>
-    as.numeric() |>
-    max()
-}
-
 #' LNM Posterior Mean
 #' @importFrom cmdstanr as_draws
 #' @export
 beta_mean <- function(fit) {
   beta_draws <- as_draws(fit@estimate, "beta")
-  D <- parse_nrow(colnames(beta_draws))
-  colMeans(beta_draws) |>
-    matrix(nrow = D)
+  K <- length(lhs.vars(fit@formula))
+  matrix(colMeans(beta_draws), ncol = K - 1)
 }
 
 #' LNM Posterior Samples
 #' @export
 beta_samples <- function(fit, size = 1) {
   beta_draws <- as_draws(fit@estimate, "beta")
-  D <- parse_nrow(colnames(beta_draws))
+  K <- length(lhs.vars(fit@formula))
   ix <- sample(nrow(beta_draws), size, replace = TRUE)
 
   b_star <- list()
   for (i in seq_along(ix)) {
-    b_star[[i]] <- matrix(beta_draws[ix[i], ], nrow = D)
+    b_star[[i]] <- matrix(beta_draws[ix[i], ], ncol = K - 1)
   }
 
   b_star
@@ -96,11 +88,13 @@ beta_samples <- function(fit, size = 1) {
 
 lnm_predict <- function(object, newdata = NULL, ...) {
   newdata <- prepare_newdata(object, newdata)
-  phi_inverse(newdata %*% beta_mean(object))
+  p_hat <- phi_inverse(newdata %*% beta_mean(object))
+  colnames(p_hat) <- lhs.vars(object@formula)
+  p_hat
 }
 
 #' @importFrom formula.tools lhs
-lnm_sample <- function(x, size = 1, depth = 1e4, newdata = NULL) {
+lnm_sample <- function(x, size = 1, depth = 5e4, newdata = NULL, ...) {
   newdata <- prepare_newdata(x, newdata)
   b_star <- beta_samples(x, nrow(newdata))
 
