@@ -20,7 +20,7 @@ library(tidyverse)
 ```
 
 ```{r}
-example_data <- lnm_data()
+example_data <- lnm_data(N = 200, K = 20)
 xy <- bind_cols(example_data[c("X", "y")])
 fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 ```
@@ -31,8 +31,20 @@ y_star <- sample(fit, depth = 200)
 ```
 
 ```{r}
-newx <- lnm_data()$X
-p_hat <- predict(fit, newx)
-y_star <- sample(fit, newdata = newx, depth = 200)
+p_hat <- predict(fit, example_data$X)
+#y_star <- sample(fit, newdata = newx, depth = 200)
+y_star <- sample(fit, newdata = example_data$X, depth = 1e4)
 ```
 
+```{r}
+true <- colMeans(example_data$y / rowSums(example_data$y))
+fitted <- colMeans(y_star / rowSums(y_star))
+plot(true, colMeans(p_hat), asp = 1)
+points(true, fitted, col = "red")
+abline(a = 0, b = 1)
+```
+
+```{r}
+newx <- lnm_data()$X
+new_p_hat <- predict(fit, newx)
+```
