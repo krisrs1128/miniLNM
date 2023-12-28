@@ -1,7 +1,7 @@
 #' @importFrom formula.tools lhs.vars
 #' @importFrom cmdstanr cmdstan_model
 #' @export
-lnm <- function(formula, data, iter = 5e3, sigma_b = 1, l1 = 50, l2 = 25) {
+lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
   # prepare input data
   formula <- prepare_formula(formula, data)
   ys <- lhs.vars(formula)
@@ -25,7 +25,7 @@ lnm <- function(formula, data, iter = 5e3, sigma_b = 1, l1 = 50, l2 = 25) {
   # return as an lnm class
   new(
     "lnm",
-    estimate = model$variational(data_list, iter = iter),
+    estimate = model$variational(data_list, ...),
     formula = formula,
     template = data
   )
