@@ -17,7 +17,7 @@ void vector_inv_gamma_lp(vector x, int D, real l1, real l2) {
 void outcome_mu_lp(matrix mu, matrix x, matrix B, int N, int K, vector sigmas_mu) {
   for (i in 1:N) {
     for (k in 1:K) {
-      mu[i, k] ~ normal(x[i] * to_vector(B'[k]), sigmas_mu[k]);
+      mu[i, k] ~ normal(x[i] * col(B, k), sigmas_mu[k]);
     }
   }
 }
