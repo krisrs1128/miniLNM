@@ -4,7 +4,7 @@ A small wrapper of `cmdstanr` for estimating logistic-normal multinomial models.
 Includes helpers for prediction and sampling.
 
 ```
-library(lnm)
+library(miniLNM)
 library(tidyverse)
 
 example_data <- lnm_data()
