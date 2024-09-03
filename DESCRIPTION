@@ -20,5 +20,7 @@ Imports:
     tibble
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    cmdstanr
+Remotes: stan-dev/cmdstanr
 VignetteBuilder: knitr
