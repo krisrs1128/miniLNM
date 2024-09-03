@@ -12,16 +12,14 @@ RoxygenNote: 7.3.2
 Depends:
   R (>= 4.0.0)
 Imports:
+    cmdstanr,
     dplyr,
     formula.tools,
     glue,
-    instantiate,
     methods,
-    posterior,
     tibble
 Suggests: 
     knitr,
-    rmarkdown,
-    cmdstanr
+    rmarkdown
 Remotes: stan-dev/cmdstanr
 VignetteBuilder: knitr
