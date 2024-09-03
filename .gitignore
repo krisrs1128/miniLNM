@@ -1,2 +1,6 @@
 inst/doc
 .Rproj.user
+src/stan/**
+!src/stan/**/*.*
+src/stan/**/*.exe
+src/stan/**/*.EXE

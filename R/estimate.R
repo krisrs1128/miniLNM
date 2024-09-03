@@ -1,5 +1,18 @@
+#' Fit a logistic normal multinomial model using R's formula interface.
+#'
+#' This function fits a logistic normal multinomial (LNM) model to the data
+#' using R's formula interface. The LNM model is a generalization of the
+#' multinomial logistic regression model, allowing for correlated responses
+#' within each category of the response variable.
+#'
+#' @param formula A formula specifying the model structure.
+#' @param data A data frame containing the variables specified in the formula.
+#' @param ... Additional arguments to be passed to the underlying fitting
+#'   function.
+#' @return An object of class "lnm" representing the fitted LNM model.
 #' @importFrom formula.tools lhs.vars
 #' @importFrom instantiate stan_package_model
+#' @importFrom methods new
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
   # prepare input data
@@ -29,6 +42,17 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
   )
 }
 
+#' Inverse log ratio transformation
+#' 
+#' This function applies the inverse logistic function to a vector, which maps
+#' the values of the vector to the range (0, 1).
+#' 
+#' @param x A numeric vector to transform using an inverse log ratio
+#'   transformation.
+#' @return A numeric vector with values mapped to the range (0, 1) and a
+#'   reference coordinate added.
+#' @examples
+#' phi_inverse(c(-5, 0, 5))
 #' @export
 phi_inverse <- function(mu) {
   if (is.matrix(mu)) {
@@ -44,6 +68,8 @@ phi_inverse_ <- function(mu) {
 
 #' @importFrom dplyr select matches
 #' @importFrom formula.tools rhs.vars
+#' @importFrom stats as.formula model.matrix rmultinom runif terms update
+#' @noRd
 model_matrix_df <- function(formula, data) {
   model.matrix(formula, data) |>
     as_tibble() |>
