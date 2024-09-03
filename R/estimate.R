@@ -11,7 +11,7 @@
 #'   function.
 #' @return An object of class "lnm" representing the fitted LNM model.
 #' @importFrom formula.tools lhs.vars
-#' @importFrom instantiate stan_package_model
+#' @importFrom cmdstanr cmdstan_model
 #' @importFrom methods new
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
@@ -31,7 +31,8 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     l1 = l1,
     l2 = l2
   )
-  model <- stan_package_model("lnm", "miniLNM")
+  model <- file.path(system.file(package = "miniLNM"), "lnm.stan") |>
+    cmdstan_model()
 
   # return as an lnm class
   new(
@@ -87,7 +88,7 @@ prepare_newdata <- function(fit, newdata = NULL) {
 }
 
 #' LNM Posterior Mean
-#' @importFrom posterior as_draws
+#' @importFrom cmdstanr as_draws
 #' @export
 beta_mean <- function(fit) {
   beta_draws <- as_draws(fit@estimate, "beta")
