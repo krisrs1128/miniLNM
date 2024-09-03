@@ -1,5 +1,5 @@
 #' @importFrom formula.tools lhs.vars
-#' @importFrom cmdstanr cmdstan_model
+#' @importFrom instantiate stan_package_model
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
   # prepare input data
@@ -18,9 +18,7 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     l1 = l1,
     l2 = l2
   )
-
-  model <- file.path(system.file(package = "miniLNM"), "lnm.stan") |>
-    cmdstan_model()
+  model <- stan_package_model("lnm", "miniLNM")
 
   # return as an lnm class
   new(
@@ -63,7 +61,7 @@ prepare_newdata <- function(fit, newdata = NULL) {
 }
 
 #' LNM Posterior Mean
-#' @importFrom cmdstanr as_draws
+#' @importFrom posterior as_draws
 #' @export
 beta_mean <- function(fit) {
   beta_draws <- as_draws(fit@estimate, "beta")

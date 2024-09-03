@@ -8,13 +8,16 @@ Description: miniLNM fits a logistic-normal multinomial model using a 30 line St
 License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
-Requires:
-    cmdstanr,
+RoxygenNote: 7.3.2
+Depends:
+  R (>= 4.0.0)
+Imports:
+    posterior,
+    dplyr,
     formula.tools,
     glue,
-    tibble,
-    dplyr
+    instantiate,
+    tibble
 Suggests: 
     knitr,
     rmarkdown
