@@ -6,6 +6,15 @@
 \usage{
 beta_mean(fit)
 }
+\arguments{
+\item{fit}{An object of class \code{lnm} whose estimate slot contains the rstan
+fitted logistic normal multinomial model.}
+}
+\value{
+A matrix whose rows are predictors and columns are outcomes in the
+beta parameter for the LNM model.
+}
 \description{
-LNM Posterior Mean
+Average the samples for the beta parameter from the VB posterior mean. This
+is used to get predicted compositions when using \code{predict} on an lnm model.
 }

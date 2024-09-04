@@ -11,6 +11,10 @@ lnm(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...)
 
 \item{data}{A data frame containing the variables specified in the formula.}
 
+\item{sigma_b}{The prior standard deviation of the beta coefficients in the
+LNM model. See the stan code definition in inst/stan/lnm.stan for the full
+model specification.}
+
 \item{l1}{The first inverse gamma hyperprior parameter for sigmas_mu.}
 
 \item{l2}{The first inverse gamma hyperprior parameter for sigmas_mu.}
@@ -25,10 +29,16 @@ An object of class "lnm" representing the fitted LNM model.
 This function fits a logistic normal multinomial (LNM) model to the data
 using R's formula interface. The LNM model is a generalization of the
 multinomial logistic regression model, allowing for correlated responses
-within each category of the response variable.
+within each category of the response variable. It can be used to learn the
+relationship between experimental/environmental factors and community
+composition. It is a statistical model that estimates the probabilities of
+different outcomes in a multinomial distribution, given a set of covariates.
+The LNM model assumes that a log-ratio of the outcome probabilities follow a
+multivariate normal distribution. By fitting the LNM model to observed data,
+we can infer the effects of the covariates on the outcome compositions.
 }
 \examples{
 example_data <- lnm_data(N = 200, K = 20)
-xy <- bind_cols(example_data[c("X", "y")])
+xy <- dplyr::bind_cols(example_data[c("X", "y")])
 fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 }

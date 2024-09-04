@@ -7,7 +7,7 @@
 phi_inverse(mu)
 }
 \arguments{
-\item{x}{A numeric vector to transform using an inverse log ratio
+\item{mu}{A numeric vector to transform using an inverse log ratio
 transformation.}
 }
 \value{

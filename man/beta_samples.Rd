@@ -6,6 +6,18 @@
 \usage{
 beta_samples(fit, size = 1)
 }
+\arguments{
+\item{fit}{An object of class \code{lnm} whose estimate slot contains the rstan
+fitted logistic normal multinomial model.}
+
+\item{size}{The number of draws from the posterior to return.}
+}
+\value{
+A matrix whose rows are predictors and columns are outcomes in the
+beta parameter for the LNM model.
+}
 \description{
-LNM Posterior Samples
+Return multiple samples for the beta parameter from the VB posterior mean.
+This is used to simulate new compositions when using \code{sample} on an lnm
+model.
 }
