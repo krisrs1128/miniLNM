@@ -1,3 +1,16 @@
+#' Simulates data from a Logistic Normal Multinomial Model.
+#'
+#' @param N The number of samples in the output data.
+#' @param D The number of covariates, each of which can influence the response
+#'   composition vector (e.g., the timepoint or disease status).
+#' @param K The number of output dimensions (e.g., number of taxa).
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{X}{An N x D matrix of covariates.}
+#'   \item{y}{The N x K simulated samples.}
+#'   \item{B}{The D x K relationship between covariates and outputs.}
+#' }
 #' @importFrom tibble as_tibble
 #' @export
 lnm_data <- function(N = 100, D = 5, K = 20) {

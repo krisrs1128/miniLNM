@@ -3,10 +3,19 @@
 #' This function fits a logistic normal multinomial (LNM) model to the data
 #' using R's formula interface. The LNM model is a generalization of the
 #' multinomial logistic regression model, allowing for correlated responses
-#' within each category of the response variable.
+#' within each category of the response variable. It can be used to learn the
+#' relationship between experimental/environmental factors and community
+#' composition. It is a statistical model that estimates the probabilities of
+#' different outcomes in a multinomial distribution, given a set of covariates.
+#' The LNM model assumes that a log-ratio of the outcome probabilities follow a
+#' multivariate normal distribution. By fitting the LNM model to observed data,
+#' we can infer the effects of the covariates on the outcome compositions.
 #'
 #' @param formula A formula specifying the model structure.
 #' @param data A data frame containing the variables specified in the formula.
+#' @param sigma_b The prior standard deviation of the beta coefficients in the
+#'   LNM model. See the stan code definition in inst/stan/lnm.stan for the full
+#'   model specification.
 #' @param l1 The first inverse gamma hyperprior parameter for sigmas_mu.
 #' @param l2 The first inverse gamma hyperprior parameter for sigmas_mu.
 #' @param ... Additional arguments to be passed to the underlying vb() call from
@@ -18,7 +27,7 @@
 #' @importFrom tidyselect any_of
 #' @examples
 #' example_data <- lnm_data(N = 200, K = 20)
-#' xy <- bind_cols(example_data[c("X", "y")])
+#' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
@@ -53,7 +62,7 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
 #' This function applies the inverse logistic function to a vector, which maps
 #' the values of the vector to the range (0, 1).
 #'
-#' @param x A numeric vector to transform using an inverse log ratio
+#' @param mu A numeric vector to transform using an inverse log ratio
 #'   transformation.
 #' @return A numeric vector with values mapped to the range (0, 1) and a
 #'   reference coordinate added.
@@ -82,6 +91,23 @@ model_matrix_df <- function(formula, data) {
         select(matches(rhs.vars(formula)))
 }
 
+#' Design Matrix for a Model
+#'
+#' This is a helper function to form the design matrix for an LNM regression
+#' starting from a fitted model's formula object. It is an analog of
+#' model.matrix for the multiresponse setting.
+#' @param fit An object of class `lnm` whose estimate slot contains the rstan
+#'   fitted logistic normal multinomial model.
+#' @param newdata A data.frame containing variables in the formula definition of
+#'   the fit, but which hasn't been converted into the matrix format needed for
+#'   internal prediction.
+#' @return A matrix containing the design matrix that can be multiplied with the
+#'   fitted Beta parameter to get fitted compositions.
+#' @examples
+#' example_data <- lnm_data(N = 200, K = 20)
+#' xy <- dplyr::bind_cols(example_data[c("X", "y")])
+#' fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+#' prepare_newdata(fit, example_data[["X"]])
 #' @export
 prepare_newdata <- function(fit, newdata = NULL) {
     if (is.null(newdata)) {
@@ -93,6 +119,14 @@ prepare_newdata <- function(fit, newdata = NULL) {
 }
 
 #' LNM Posterior Mean
+#'
+#' Average the samples for the beta parameter from the VB posterior mean. This
+#' is used to get predicted compositions when using `predict` on an lnm model.
+#'
+#' @param fit An object of class `lnm` whose estimate slot contains the rstan
+#'   fitted logistic normal multinomial model.
+#' @return A matrix whose rows are predictors and columns are outcomes in the
+#'   beta parameter for the LNM model.
 #' @importFrom posterior as_draws_matrix subset_draws
 #' @export
 beta_mean <- function(fit) {
@@ -104,6 +138,16 @@ beta_mean <- function(fit) {
 }
 
 #' LNM Posterior Samples
+#'
+#' Return multiple samples for the beta parameter from the VB posterior mean.
+#' This is used to simulate new compositions when using `sample` on an lnm
+#' model.
+#'
+#' @param fit An object of class `lnm` whose estimate slot contains the rstan
+#'   fitted logistic normal multinomial model.
+#' @param size The number of draws from the posterior to return.
+#' @return A matrix whose rows are predictors and columns are outcomes in the
+#'   beta parameter for the LNM model.
 #' @export
 beta_samples <- function(fit, size = 1) {
     beta_draws <- as_draws_matrix(fit@estimate) |>
@@ -142,8 +186,39 @@ lnm_sample <- function(x, size = 1, depth = 5e4, newdata = NULL, ...) {
     y_star
 }
 
+#' LNM Fitted Probabilities
+#'
+#' Given an input dataset, predict the output composition. Specifically, this
+#' outputs \eqn{\phi^{-1}(Bx)}, for the inverse log ratio transformation
+#' \eqn{\phi^{-1}} and fitted covariate matrix \eqn{B}.
+#' @param object An object of class lnm with fitted parameters \eqn{\hat{B}} and
+#'   which we want to use to form predictions on new samples.
+#' @param newdata New samples on which to form predictions. Defaults to NULL, in
+#'   which case predictions are made at the same design points as those used
+#'   during the original training.
+#' @param ... Additional keyword arguments, for consistency with R's predict
+#'   generic (never used).
+#' @return A matrix with predictions along rows and outcomes along columns. Rows
+#'   sum up to one.
 #' @export
 setMethod("predict", "lnm", lnm_predict)
 
+#' LNM Fitted Probabilities
+#'
+#' Given an input dataset, sample compositions that are consistent with the
+#' input. Specifically, this samples from a multinomial with mean
+#' \eqn{\phi^{-1}(Bx)}. The default depth is 5e4. Modify the "depth" parameter
+#' to change this.
+#' 
+#' @param x An object of class lnm with fitted parameters \eqn{\hat{B}} and
+#'   which we want to use to form predictions on new samples.
+#' @param newdata New samples on which to form predictions. Defaults to NULL, in
+#'   which case predictions are made at the same design points as those used
+#'   during the original training.
+#' @param size The number of samples to generate.
+#' @param depth The depth to use when sampling the multinomial for each
+#'   simulated element.
+#' @param ... Additional keyword arguments, for consistency with R's predict
+#'   generic (never used).
 #' @export
 setMethod("sample", "lnm", lnm_sample)
