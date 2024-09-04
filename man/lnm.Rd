@@ -4,7 +4,16 @@
 \alias{lnm}
 \title{Fit a logistic normal multinomial model using R's formula interface.}
 \usage{
-lnm(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...)
+lnm(
+  formula,
+  data,
+  sigma_b = 2,
+  l1 = 10,
+  l2 = 10,
+  show_messages = FALSE,
+  chains = 1,
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula specifying the model structure.}
