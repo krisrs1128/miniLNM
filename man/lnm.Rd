@@ -40,5 +40,8 @@ we can infer the effects of the covariates on the outcome compositions.
 \examples{
 example_data <- lnm_data(N = 200, K = 20)
 xy <- dplyr::bind_cols(example_data[c("X", "y")])
-fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+fit <- lnm(
+    starts_with("y") ~ starts_with("x"), xy, 
+    iter = 500, output_samples = 500
+)
 }

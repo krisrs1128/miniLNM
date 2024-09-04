@@ -28,7 +28,10 @@
 #' @examples
 #' example_data <- lnm_data(N = 200, K = 20)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
-#' fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+#' fit <- lnm(
+#'     starts_with("y") ~ starts_with("x"), xy, 
+#'     iter = 500, output_samples = 500
+#' )
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     # prepare input data
@@ -106,7 +109,10 @@ model_matrix_df <- function(formula, data) {
 #' @examples
 #' example_data <- lnm_data(N = 200, K = 20)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
-#' fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+#' fit <- lnm(
+#'     starts_with("y") ~ starts_with("x"), xy, 
+#'     iter = 500, output_samples = 500
+#' )
 #' prepare_newdata(fit, example_data[["X"]])
 #' @export
 prepare_newdata <- function(fit, newdata = NULL) {
