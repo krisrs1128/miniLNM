@@ -1,7 +1,6 @@
 ## miniLNM
 
-A small wrapper of `cmdstanr` for estimating logistic-normal multinomial models.
-Includes helpers for prediction and sampling.
+A small stan script for fitting logistic-normal multinomial models (see `inst/stan/` above). Includes helpers for prediction and sampling.
 
 ```
 library(miniLNM)
