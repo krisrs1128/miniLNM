@@ -7,12 +7,19 @@
 #'
 #' @param formula A formula specifying the model structure.
 #' @param data A data frame containing the variables specified in the formula.
-#' @param ... Additional arguments to be passed to the underlying fitting
-#'   function.
+#' @param l1 The first inverse gamma hyperprior parameter for sigmas_mu.
+#' @param l2 The first inverse gamma hyperprior parameter for sigmas_mu.
+#' @param ... Additional arguments to be passed to the underlying vb() call from 
+#'     rstan.
 #' @return An object of class "lnm" representing the fitted LNM model.
 #' @importFrom formula.tools lhs.vars
-#' @importFrom cmdstanr cmdstan_model
+#' @importFrom rstan vb
 #' @importFrom methods new
+#' @importFrom tidyselect any_of
+#' @examples
+#' example_data <- lnm_data(N = 200, K = 20)
+#' xy <- bind_cols(example_data[c("X", "y")])
+#' fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
   # prepare input data
@@ -22,7 +29,7 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
 
   # fit model using stan
   data_list <- list(
-    y = as.matrix(select(data, ys)),
+    y = as.matrix(select(data, any_of(ys))),
     x = x_data,
     N = nrow(x_data),
     D = ncol(x_data),
@@ -31,13 +38,11 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     l1 = l1,
     l2 = l2
   )
-  model <- file.path(system.file(package = "miniLNM"), "lnm.stan") |>
-    cmdstan_model()
 
   # return as an lnm class
   new(
     "lnm",
-    estimate = model$variational(data_list, ...),
+    estimate = vb(stanmodels$lnm, data_list, ...),
     formula = formula,
     template = data
   )
@@ -88,10 +93,12 @@ prepare_newdata <- function(fit, newdata = NULL) {
 }
 
 #' LNM Posterior Mean
-#' @importFrom cmdstanr as_draws
+#' @importFrom posterior as_draws_matrix subset_draws
 #' @export
 beta_mean <- function(fit) {
-  beta_draws <- as_draws(fit@estimate, "beta")
+    beta_draws <- as_draws_matrix(fit@estimate) |>
+            subset_draws(variable = "beta")
+
   K <- length(lhs.vars(fit@formula))
   matrix(colMeans(beta_draws), ncol = K - 1)
 }
@@ -99,7 +106,8 @@ beta_mean <- function(fit) {
 #' LNM Posterior Samples
 #' @export
 beta_samples <- function(fit, size = 1) {
-  beta_draws <- as_draws(fit@estimate, "beta")
+  beta_draws <- as_draws_matrix(fit@estimate) |>
+        subset_draws(variable = "beta")
   K <- length(lhs.vars(fit@formula))
   ix <- sample(nrow(beta_draws), size, replace = TRUE)
 
