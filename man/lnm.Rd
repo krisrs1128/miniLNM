@@ -4,24 +4,19 @@
 \alias{lnm}
 \title{Fit a logistic normal multinomial model using R's formula interface.}
 \usage{
-lnm(
-  formula,
-  data,
-  sigma_b = 2,
-  l1 = 10,
-  l2 = 10,
-  show_messages = FALSE,
-  chains = 1,
-  ...
-)
+lnm(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...)
 }
 \arguments{
 \item{formula}{A formula specifying the model structure.}
 
 \item{data}{A data frame containing the variables specified in the formula.}
 
-\item{...}{Additional arguments to be passed to the underlying fitting
-function.}
+\item{l1}{The first inverse gamma hyperprior parameter for sigmas_mu.}
+
+\item{l2}{The first inverse gamma hyperprior parameter for sigmas_mu.}
+
+\item{...}{Additional arguments to be passed to the underlying vb() call from
+rstan.}
 }
 \value{
 An object of class "lnm" representing the fitted LNM model.
@@ -31,4 +26,9 @@ This function fits a logistic normal multinomial (LNM) model to the data
 using R's formula interface. The LNM model is a generalization of the
 multinomial logistic regression model, allowing for correlated responses
 within each category of the response variable.
+}
+\examples{
+example_data <- lnm_data(N = 200, K = 20)
+xy <- bind_cols(example_data[c("X", "y")])
+fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 }
