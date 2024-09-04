@@ -3,7 +3,7 @@ Title: A Simple Logistic-Normal Mulitnomial Implementation
 Version: 0.1.0
 Authors@R: 
     person("Kris", "Sankaran", , "ksankaran@wisc.edu", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "0000-0002-9415-1971"))
 Description: miniLNM fits a logistic-normal multinomial model using a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects.
 License: CC0
 Encoding: UTF-8
@@ -12,14 +12,28 @@ RoxygenNote: 7.3.2
 Depends:
   R (>= 4.0.0)
 Imports:
-    cmdstanr,
+    Rcpp (>= 0.12.0),
+    RcppParallel (>= 5.0.1),
     dplyr,
     formula.tools,
     glue,
     methods,
-    tibble
+    posterior,
+    rstan (>= 2.18.1),
+    rstantools (>= 2.4.0),
+    tibble,
+    tidyselect
 Suggests: 
     knitr,
+    tidyverse,
     rmarkdown
-Remotes: stan-dev/cmdstanr
 VignetteBuilder: knitr
+Biarch: true
+LinkingTo: 
+    BH (>= 1.66.0),
+    Rcpp (>= 0.12.0),
+    RcppEigen (>= 0.3.3.3.0),
+    RcppParallel (>= 5.0.1),
+    rstan (>= 2.18.1),
+    StanHeaders (>= 2.18.0)
+SystemRequirements: GNU make

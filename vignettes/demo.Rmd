@@ -17,24 +17,45 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(miniLNM)
 library(tidyverse)
+set.seed(20240904)
 ```
+
+This vignette illustrates use of the `lnm` function using a simulated dataset.
+First, we create some example data coming from a true LNM model.
 
 ```{r}
 example_data <- lnm_data(N = 200, K = 20)
 xy <- bind_cols(example_data[c("X", "y")])
+```
+
+Next, we define the regression. We are using an extension of the formula
+interface that allows for multiple outcomes. This allows us to use it for a
+wider range of integration problems, like in our multimedia package for
+mediation analysis.
+
+```{r}
 fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 ```
 
+Once we have estimated the model, we can use predict to get the fitted
+compositions on the training data. We can also draw new samples at different
+read depths and use `newdata` to sample at new design points.
+
 ```{r}
-p_hat <- predict(fit)
-y_star <- sample(fit, depth = 200)
+newx <- lnm_data()$X
+new_p_hat <- predict(fit, newx, depth = 300)
 ```
+
+Let's verify that the estimates are close to the truth. First we'll get some
+fitted values.
 
 ```{r}
 p_hat <- predict(fit, example_data$X)
-#y_star <- sample(fit, newdata = newx, depth = 200)
 y_star <- sample(fit, newdata = example_data$X, depth = 1e4)
 ```
+
+And now we plot it. So, despite the diagnostic warning from above, the estimates
+seem pretty good.
 
 ```{r}
 true <- colMeans(example_data$y / rowSums(example_data$y))
@@ -42,9 +63,4 @@ fitted <- colMeans(y_star / rowSums(y_star))
 plot(true, colMeans(p_hat), asp = 1)
 points(true, fitted, col = "red")
 abline(a = 0, b = 1)
-```
-
-```{r}
-newx <- lnm_data()$X
-new_p_hat <- predict(fit, newx)
 ```
