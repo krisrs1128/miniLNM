@@ -4,7 +4,7 @@
 \alias{lnm_data}
 \title{Simulates data from a Logistic Normal Multinomial Model.}
 \usage{
-lnm_data(N = 100, D = 5, K = 20)
+lnm_data(N = 100, D = 5, K = 10)
 }
 \arguments{
 \item{N}{The number of samples in the output data.}

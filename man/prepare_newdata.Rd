@@ -24,11 +24,11 @@ starting from a fitted model's formula object. It is an analog of
 model.matrix for the multiresponse setting.
 }
 \examples{
-example_data <- lnm_data(N = 200, K = 20)
+example_data <- lnm_data(N = 10, K = 5)
 xy <- dplyr::bind_cols(example_data[c("X", "y")])
 fit <- lnm(
-    starts_with("y") ~ starts_with("x"), xy, 
-    iter = 500, output_samples = 500
+    starts_with("y") ~ starts_with("x"), xy,
+    iter = 5, output_samples = 5
 )
 prepare_newdata(fit, example_data[["X"]])
 }

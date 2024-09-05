@@ -13,7 +13,7 @@
 #' }
 #' @importFrom dplyr as_tibble
 #' @export
-lnm_data <- function(N = 100, D = 5, K = 20) {
+lnm_data <- function(N = 100, D = 5, K = 10) {
     # sample covariates and predictors
     X <- runif(N * D) |>
         matrix(N, D)
