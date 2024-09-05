@@ -8,6 +8,8 @@ output: md_document
 ```{r, setup, message = FALSE}
 library(miniLNM)
 library(dplyr)
+knitr::knit_hooks$set(output = miniLNM::ansi_aware_handler)
+options(crayon.enabled = TRUE)
 ```
 
 miniLNM is a lightweight package for fitting and using logistic-normal multinomial
