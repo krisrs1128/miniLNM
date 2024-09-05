@@ -8,10 +8,9 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::knit_hooks$set(output = miniLNM::ansi_aware_handler)
+options(crayon.enabled = TRUE)
 ```
 
 ```{r setup, message = FALSE}
@@ -34,7 +33,7 @@ wider range of integration problems, like in our multimedia package for
 mediation analysis.
 
 ```{r}
-fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+fit <- lnm(starts_with("y") ~ starts_with("x"), xy, refresh = 0)
 fit
 ```
 
@@ -55,13 +54,22 @@ p_hat <- predict(fit, example_data$X)
 y_star <- sample(fit, newdata = example_data$X, depth = 1e4)
 ```
 
-And now we plot it. So, despite the diagnostic warning from above, the estimates
-seem pretty good.
+The block below compares some posterior predictive samples with the original
+data. The overlap between red and black points means that the simulated data are
+a close match to the original samples.
 
 ```{r}
 true <- colMeans(example_data$y / rowSums(example_data$y))
 fitted <- colMeans(y_star / rowSums(y_star))
 plot(true, colMeans(p_hat), asp = 1)
 points(true, fitted, col = "red")
+abline(a = 0, b = 1)
+```
+
+We can also check the estimated coefficients. Everything is *slightly* shrunk
+towards zero, but this is what you would expect given the normal prior.
+
+```{r}
+plot(example_data$B, beta_mean(fit))
 abline(a = 0, b = 1)
 ```
