@@ -1,8 +1,8 @@
 ---
-title: "demo"
+title: "Example on Simulated Data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{demo}
+  %\VignetteIndexEntry{Example on Simulated Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message = FALSE}
 library(miniLNM)
-library(tidyverse)
+library(dplyr)
 set.seed(20240904)
 ```
 
@@ -35,6 +35,7 @@ mediation analysis.
 
 ```{r}
 fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+fit
 ```
 
 Once we have estimated the model, we can use predict to get the fitted
