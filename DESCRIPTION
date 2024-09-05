@@ -4,7 +4,7 @@ Version: 0.1.0
 Authors@R: 
     person("Kris", "Sankaran", , "ksankaran@wisc.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9415-1971"))
-Description: Logistic-normal Multinomial models are common in problems with multivariate count data. This package implements a logistic-normal multinomial model using a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects. The logistic-normal multinomial model is often used to model "compositional" data -- it can be used whenever a multinomial probability parameter is thought to depend linearly on inputs in a transformed, log ratio space. For more details, please refer to the reference.
+Description: Logistic-normal Multinomial models are common in problems with multivariate count data. This package gives a simple implementation with a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects, in particular for downstream tasks that require analysis of "compositional" data. It can be applied whenever a multinomial probability parameter is thought to depend linearly on inputs in a transformed, log ratio space.
 License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -14,6 +14,7 @@ Depends:
 Imports:
     Rcpp (>= 0.12.0),
     RcppParallel (>= 5.0.1),
+    cli,
     dplyr,
     formula.tools,
     glue,
@@ -21,12 +22,11 @@ Imports:
     posterior,
     rstan (>= 2.18.1),
     rstantools (>= 2.4.0),
-    tibble,
     tidyselect
 Suggests: 
     knitr,
-    tidyverse,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Biarch: true
 LinkingTo: 
@@ -41,3 +41,4 @@ BugReports:
     https://github.com/krisrs1128/miniLNM/issues
 URL:
     https://github.com/krisrs1128/miniLNM
+Config/testthat/edition: 3
