@@ -4,3 +4,7 @@ src/stan/**
 !src/stan/**/*.*
 src/stan/**/*.exe
 src/stan/**/*.EXE
+*.so
+*.o
+*.Rproj
+.Rhistory
