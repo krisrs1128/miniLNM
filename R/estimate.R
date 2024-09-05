@@ -26,11 +26,11 @@
 #' @importFrom methods new
 #' @importFrom tidyselect any_of
 #' @examples
-#' example_data <- lnm_data(N = 200, K = 20)
+#' example_data <- lnm_data(N = 50, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
 #'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 500, output_samples = 500
+#'     iter = 25, output_samples = 25
 #' )
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
@@ -107,11 +107,11 @@ model_matrix_df <- function(formula, data) {
 #' @return A matrix containing the design matrix that can be multiplied with the
 #'   fitted Beta parameter to get fitted compositions.
 #' @examples
-#' example_data <- lnm_data(N = 200, K = 20)
+#' example_data <- lnm_data(N = 10, K = 5)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
-#'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 500, output_samples = 500
+#'     starts_with("y") ~ starts_with("x"), xy,
+#'     iter = 5, output_samples = 5
 #' )
 #' prepare_newdata(fit, example_data[["X"]])
 #' @export
@@ -134,13 +134,18 @@ prepare_newdata <- function(fit, newdata = NULL) {
 #' @return A matrix whose rows are predictors and columns are outcomes in the
 #'   beta parameter for the LNM model.
 #' @importFrom posterior as_draws_matrix subset_draws
+#' @importFrom formula.tools lhs.vars rhs.vars
+#' @importFrom utils head
 #' @export
 beta_mean <- function(fit) {
     beta_draws <- as_draws_matrix(fit@estimate) |>
         subset_draws(variable = "beta")
 
     K <- length(lhs.vars(fit@formula))
-    matrix(colMeans(beta_draws), ncol = K - 1)
+    beta <- matrix(colMeans(beta_draws), ncol = K - 1)
+    rownames(beta) <- rhs.vars(fit@formula)
+    colnames(beta) <- head(lhs.vars(fit@formula), -1)
+    beta
 }
 
 #' LNM Posterior Samples
@@ -164,6 +169,8 @@ beta_samples <- function(fit, size = 1) {
     b_star <- list()
     for (i in seq_along(ix)) {
         b_star[[i]] <- matrix(beta_draws[ix[i], ], ncol = K - 1)
+        rownames(b_star[[i]]) <- rhs.vars(fit@formula)
+        colnames(b_star[[i]]) <- head(lhs.vars(fit@formula), -1)
     }
 
     b_star

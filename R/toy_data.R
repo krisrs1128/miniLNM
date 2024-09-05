@@ -11,7 +11,7 @@
 #'   \item{y}{The N x K simulated samples.}
 #'   \item{B}{The D x K relationship between covariates and outputs.}
 #' }
-#' @importFrom tibble as_tibble
+#' @importFrom dplyr as_tibble
 #' @export
 lnm_data <- function(N = 100, D = 5, K = 20) {
     # sample covariates and predictors
