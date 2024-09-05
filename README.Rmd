@@ -1,0 +1,43 @@
+---
+title: "multimedia"
+output: md_document
+---
+
+# miniLNM
+
+```{r, setup, message = FALSE}
+library(miniLNM)
+library(dplyr)
+```
+
+miniLNM is a lightweight package for fitting and using logistic-normal multinomial
+models. It wraps a simple Stan script (see  `inst/stan/` folder in the [source code](https://github.com/krisrs1128/miniLNM))
+and defines an S4 class that makes it easy to specify, estimate, and draw
+samples from the fit. For example, you can use tidyselect syntax to relate
+multiple compositional outputs to a set of influential biological factors.
+
+```{r}
+example_data <- lnm_data()
+xy <- bind_cols(example_data[c("X", "y")])
+fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
+```
+
+The print method gives a concise summary of the fitted model, which is easier to
+read than the full Stan output.
+
+```{r}
+fit
+```
+
+You can also use `predict`, like in ordinary linear models, and can draw
+posterior predictive samples using `sample`.
+
+```{r}
+p_hat <- predict(fit)
+y_star <- sample(fit, depth = 200)
+```
+
+### Help
+
+We welcome questions and comments about the package either through [github](https://github.com/krisrs1128/miniLNM/issues) or [email](ksankaran@wisc.edu).
+
