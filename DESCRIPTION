@@ -16,6 +16,7 @@ Imports:
     RcppParallel (>= 5.0.1),
     cli,
     dplyr,
+    fansi,
     formula.tools,
     glue,
     methods,
@@ -38,7 +39,8 @@ LinkingTo:
     StanHeaders (>= 2.18.0)
 SystemRequirements: GNU make
 BugReports:
-    https://github.com/krisrs1128/miniLNM/issues
+    https://github.com/krisrs1128/miniLNM/issues/
 URL:
-    https://github.com/krisrs1128/miniLNM
+    https://github.com/krisrs1128/miniLNM/,
+    https://krisrs1128.github.io/miniLNM/
 Config/testthat/edition: 3
