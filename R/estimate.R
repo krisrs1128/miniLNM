@@ -149,10 +149,9 @@ beta_mean <- function(fit) {
     beta_draws <- as_draws_matrix(fit@estimate) |>
         subset_draws(variable = "beta")
 
-    browser()
     K <- length(lhs.vars(fit@formula))
     beta <- matrix(colMeans(beta_draws), ncol = K - 1)
-    rownames(beta) <- colnames(fit@template)
+    rownames(beta) <- colnames(model_matrix_df(fit@formula, fit@template))
     colnames(beta) <- head(lhs.vars(fit@formula), -1)
     beta
 }
@@ -186,7 +185,9 @@ beta_samples <- function(fit, size = 1) {
     b_star <- list()
     for (i in seq_along(ix)) {
         b_star[[i]] <- matrix(beta_draws[ix[i], ], ncol = K - 1)
-        rownames(b_star[[i]]) <- colnames(fit@template)
+        rownames(b_star[[i]]) <- colnames(
+            model_matrix_df(fit@formula, fit@template)
+        )
         colnames(b_star[[i]]) <- head(lhs.vars(fit@formula), -1)
     }
 
