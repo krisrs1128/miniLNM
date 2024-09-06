@@ -136,14 +136,23 @@ prepare_newdata <- function(fit, newdata = NULL) {
 #' @importFrom posterior as_draws_matrix subset_draws
 #' @importFrom formula.tools lhs.vars rhs.vars
 #' @importFrom utils head
+#' @examples
+#' example_data <- lnm_data(N = 50, K = 10)
+#' xy <- dplyr::bind_cols(example_data[c("X", "y")])
+#' fit <- lnm(
+#'     starts_with("y") ~ starts_with("x"), xy, 
+#'     iter = 25, output_samples = 25
+#' )
+#' beta_mean(fit)
 #' @export
 beta_mean <- function(fit) {
     beta_draws <- as_draws_matrix(fit@estimate) |>
         subset_draws(variable = "beta")
 
+    browser()
     K <- length(lhs.vars(fit@formula))
     beta <- matrix(colMeans(beta_draws), ncol = K - 1)
-    rownames(beta) <- rhs.vars(fit@formula)
+    rownames(beta) <- colnames(fit@template)
     colnames(beta) <- head(lhs.vars(fit@formula), -1)
     beta
 }
@@ -159,6 +168,14 @@ beta_mean <- function(fit) {
 #' @param size The number of draws from the posterior to return.
 #' @return A matrix whose rows are predictors and columns are outcomes in the
 #'   beta parameter for the LNM model.
+#' @examples
+#' example_data <- lnm_data(N = 50, K = 10)
+#' xy <- dplyr::bind_cols(example_data[c("X", "y")])
+#' fit <- lnm(
+#'     starts_with("y") ~ starts_with("x"), xy, 
+#'     iter = 25, output_samples = 25
+#' )
+#' beta_samples(fit, size = 2)
 #' @export
 beta_samples <- function(fit, size = 1) {
     beta_draws <- as_draws_matrix(fit@estimate) |>
@@ -169,7 +186,7 @@ beta_samples <- function(fit, size = 1) {
     b_star <- list()
     for (i in seq_along(ix)) {
         b_star[[i]] <- matrix(beta_draws[ix[i], ], ncol = K - 1)
-        rownames(b_star[[i]]) <- rhs.vars(fit@formula)
+        rownames(b_star[[i]]) <- colnames(fit@template)
         colnames(b_star[[i]]) <- head(lhs.vars(fit@formula), -1)
     }
 
@@ -214,6 +231,14 @@ lnm_sample <- function(x, size = 1, depth = 5e4, newdata = NULL, ...) {
 #' @return A matrix with predictions along rows and outcomes along columns. Rows
 #'   sum up to one.
 #' @export
+#' @examples
+#' example_data <- lnm_data(N = 50, K = 10)
+#' xy <- dplyr::bind_cols(example_data[c("X", "y")])
+#' fit <- lnm(
+#'     starts_with("y") ~ starts_with("x"), xy, 
+#'     iter = 25, output_samples = 25
+#' )
+#' head(predict(fit))
 setMethod("predict", "lnm", lnm_predict)
 
 #' LNM Fitted Probabilities
@@ -233,5 +258,13 @@ setMethod("predict", "lnm", lnm_predict)
 #'   simulated element.
 #' @param ... Additional keyword arguments, for consistency with R's predict
 #'   generic (never used).
+#' @examples
+#' example_data <- lnm_data(N = 50, K = 10)
+#' xy <- dplyr::bind_cols(example_data[c("X", "y")])
+#' fit <- lnm(
+#'     starts_with("y") ~ starts_with("x"), xy, 
+#'     iter = 25, output_samples = 25
+#' )
+#' head(sample(fit))
 #' @export
 setMethod("sample", "lnm", lnm_sample)

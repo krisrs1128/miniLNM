@@ -54,18 +54,22 @@ ansi_aware_handler <- function(x, options) {
     )
 }
 
+#' Concise Formula Representation
+#' @examples
+#' shorten_formula(as.formula("x1 ~ y2"))
 #' @importFrom cli col_cyan col_magenta
+#' @noRd
 shorten_formula <- function(fmla, n_show = 4) {
     lhs_str <- paste0(head(lhs.vars(fmla), n_show), collapse = " + ")
-    if (length(lhs.vars(fmla) < n_show)) {
-        lhs_str <- col_cyan(paste(lhs_str, "..."))
+    if (length(lhs.vars(fmla)) > n_show) {
+        lhs_str <- paste(lhs_str, "...")
     }
 
     rhs_str <- paste0(head(rhs.vars(fmla), n_show), collapse = " + ")
-    if (length(rhs.vars(fmla) < n_show)) {
-        rhs_str <- col_magenta(paste(rhs_str, "..."))
+    if (length(rhs.vars(fmla)) > n_show) {
+        rhs_str <- paste(rhs_str, "...")
     }
-    glue("{lhs_str} ~ {rhs_str}")
+    glue("{col_cyan(lhs_str)} ~ {col_magenta(rhs_str)}")
 }
 
 #' @importFrom dplyr as_tibble

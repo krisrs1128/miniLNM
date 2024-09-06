@@ -12,6 +12,8 @@
 #'   \item{B}{The D x K relationship between covariates and outputs.}
 #' }
 #' @importFrom dplyr as_tibble
+#' @examples
+#' lnm_data(5, 3, 3)
 #' @export
 lnm_data <- function(N = 100, D = 5, K = 10) {
     # sample covariates and predictors
