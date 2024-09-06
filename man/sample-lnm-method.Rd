@@ -28,3 +28,12 @@ input. Specifically, this samples from a multinomial with mean
 \eqn{\phi^{-1}(Bx)}. The default depth is 5e4. Modify the "depth" parameter
 to change this.
 }
+\examples{
+example_data <- lnm_data(N = 50, K = 10)
+xy <- dplyr::bind_cols(example_data[c("X", "y")])
+fit <- lnm(
+    starts_with("y") ~ starts_with("x"), xy, 
+    iter = 25, output_samples = 25
+)
+head(sample(fit))
+}

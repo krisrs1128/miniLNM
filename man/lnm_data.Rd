@@ -25,3 +25,6 @@ A list with the following components:
 \description{
 Simulates data from a Logistic Normal Multinomial Model.
 }
+\examples{
+lnm_data(5, 3, 3)
+}

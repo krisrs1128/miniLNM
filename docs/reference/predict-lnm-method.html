@@ -94,6 +94,60 @@ generic (never used).</p></dd>
 sum up to one.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="lnm_data.html">lnm_data</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">50</span>, K <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">example_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="lnm.html">lnm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">starts_with</span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span> <span class="op">~</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="va">xy</span>, </span></span>
+<span class="r-in"><span>    iter <span class="op">=</span> <span class="fl">25</span>, output_samples <span class="op">=</span> <span class="fl">25</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: ------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: EXPERIMENTAL ALGORITHM:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:   This procedure has not been thoroughly tested and may be unstable</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:   or buggy. The interface is subject to change.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: ------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 6.6e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.66 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Begin eta adaptation.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:   1 / 250 [  0%]  (Adaptation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:  50 / 250 [ 20%]  (Adaptation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 100 / 250 [ 40%]  (Adaptation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 150 / 250 [ 60%]  (Adaptation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 200 / 250 [ 80%]  (Adaptation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Success! Found best value [eta = 1] earlier than expected.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Begin stochastic gradient ascent.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:   iter             ELBO   delta_ELBO_mean   delta_ELBO_med   notes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Informational Message: The maximum number of iterations is reached! The algorithm may not have converged.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: This variational approximation is not guaranteed to be meaningful.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Drawing a sample of size 25 from the approximate posterior... </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: COMPLETED.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Pareto k diagnostic value is Inf. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              y1        y2         y3         y4          y5           y6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.02209271 0.7526938 0.04958053 0.07840177 0.021488031 0.0005108251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.08749094 0.3422915 0.13687421 0.14526691 0.129758491 0.0039208372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.04519725 0.3734171 0.06224853 0.24606256 0.019395818 0.0054161591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.01129906 0.7291611 0.02781850 0.10258837 0.008036911 0.0008782158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.01830196 0.7021003 0.04368681 0.11683142 0.021409102 0.0002946521</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.06195914 0.3846427 0.10070916 0.17125503 0.072838410 0.0072916754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               y7         y8         y9          y10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.004255046 0.02411289 0.04590836 0.0009559920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.014047821 0.08003213 0.05645340 0.0038637567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.028365344 0.05987917 0.14388271 0.0161353146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.005076642 0.01153915 0.10200563 0.0015963995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.003955742 0.01658411 0.07636082 0.0004750287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.022042855 0.05576874 0.11578690 0.0077053727</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -26,3 +26,12 @@ Given an input dataset, predict the output composition. Specifically, this
 outputs \eqn{\phi^{-1}(Bx)}, for the inverse log ratio transformation
 \eqn{\phi^{-1}} and fitted covariate matrix \eqn{B}.
 }
+\examples{
+example_data <- lnm_data(N = 50, K = 10)
+xy <- dplyr::bind_cols(example_data[c("X", "y")])
+fit <- lnm(
+    starts_with("y") ~ starts_with("x"), xy, 
+    iter = 25, output_samples = 25
+)
+head(predict(fit))
+}
