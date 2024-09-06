@@ -41,5 +41,5 @@ y_star <- sample(fit, depth = 200)
 
 ### Help
 
-We welcome questions and comments about the package either through [github](https://github.com/krisrs1128/miniLNM/issues) or [email](ksankaran@wisc.edu).
+We welcome questions and comments about the package either through [github](https://github.com/krisrs1128/miniLNM/issues) or [email](mailto:ksankaran@wisc.edu).
 
