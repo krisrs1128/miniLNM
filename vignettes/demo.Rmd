@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 knitr::knit_hooks$set(output = miniLNM::ansi_aware_handler)
 options(crayon.enabled = TRUE)
@@ -72,4 +72,8 @@ towards zero, but this is what you would expect given the normal prior.
 ```{r}
 plot(example_data$B, beta_mean(fit))
 abline(a = 0, b = 1)
+```
+
+```{r}
+sessionInfo()
 ```
