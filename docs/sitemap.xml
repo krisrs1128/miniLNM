@@ -1,20 +1,20 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/LICENSE.html</loc></url>
-<url><loc>/articles/demo.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/reference/ansi_aware_handler.html</loc></url>
-<url><loc>/reference/beta_mean.html</loc></url>
-<url><loc>/reference/beta_samples.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/lnm-class.html</loc></url>
-<url><loc>/reference/lnm.html</loc></url>
-<url><loc>/reference/lnm_data.html</loc></url>
-<url><loc>/reference/phi_inverse.html</loc></url>
-<url><loc>/reference/predict-lnm-method.html</loc></url>
-<url><loc>/reference/prepare_newdata.html</loc></url>
-<url><loc>/reference/sample-lnm-method.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/404.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/LICENSE.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/articles/demo.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/articles/index.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/authors.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/index.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/ansi_aware_handler.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/beta_mean.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/beta_samples.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/index.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/lnm-class.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/lnm.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/lnm_data.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/phi_inverse.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/predict-lnm-method.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/prepare_newdata.html</loc></url>
+<url><loc>https://krisrs1128.github.io/miniLNM/reference/sample-lnm-method.html</loc></url>
 </urlset>
 

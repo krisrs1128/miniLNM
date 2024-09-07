@@ -25,8 +25,8 @@ factors.
 ## Chain 1: 
 ## Chain 1: 
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 0.000222 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.22 seconds.
+## Chain 1: Gradient evaluation took 0.000256 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.56 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -40,28 +40,25 @@ factors.
 ## Chain 1: 
 ## Chain 1: Begin stochastic gradient ascent.
 ## Chain 1:   iter             ELBO   delta_ELBO_mean   delta_ELBO_med   notes 
-## Chain 1:    100       -10458.619             1.000            1.000
-## Chain 1:    200        -6963.594             0.751            1.000
-## Chain 1:    300        -6514.755             0.524            0.502
-## Chain 1:    400        -6421.186             0.396            0.502
-## Chain 1:    500        -6289.753             0.321            0.069
-## Chain 1:    600        -6191.713             0.270            0.069
-## Chain 1:    700        -6267.128             0.233            0.021
-## Chain 1:    800        -6103.830             0.208            0.027
-## Chain 1:    900        -6109.486             0.185            0.021
-## Chain 1:   1000        -6060.980             0.167            0.021
-## Chain 1:   1100        -6076.699             0.067            0.016
-## Chain 1:   1200        -5989.375             0.019            0.015
-## Chain 1:   1300        -6058.614             0.013            0.015
-## Chain 1:   1400        -6007.228             0.012            0.012
-## Chain 1:   1500        -5989.017             0.010            0.011
-## Chain 1:   1600        -5935.948             0.010            0.009   MEAN ELBO CONVERGED   MEDIAN ELBO CONVERGED
+## Chain 1:    100       -11184.466             1.000            1.000
+## Chain 1:    200        -6856.152             0.816            1.000
+## Chain 1:    300        -6552.809             0.559            0.631
+## Chain 1:    400        -6504.088             0.421            0.631
+## Chain 1:    500        -6260.436             0.345            0.046
+## Chain 1:    600        -6232.001             0.288            0.046
+## Chain 1:    700        -6154.505             0.249            0.039
+## Chain 1:    800        -6109.442             0.219            0.039
+## Chain 1:    900        -6190.336             0.196            0.013
+## Chain 1:   1000        -6038.314             0.179            0.025
+## Chain 1:   1100        -5991.059             0.079            0.013
+## Chain 1:   1200        -6007.286             0.017            0.013
+## Chain 1:   1300        -5990.459             0.012            0.008   MEDIAN ELBO CONVERGED
 ## Chain 1: 
 ## Chain 1: Drawing a sample of size 1000 from the approximate posterior... 
 ## Chain 1: COMPLETED.
 </code></pre>
 
-    ## Warning: Pareto k diagnostic value is 10.21. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.
+    ## Warning: Pareto k diagnostic value is 11.45. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.
 
 The print method gives a concise summary of the fitted model, which is
 easier to read than the full Stan output.
@@ -75,11 +72,11 @@ easier to read than the full Stan output.
 ## <span style='color: #555555;'># A tibble: 5 × 9</span>
 ##      y1    y2    y3    y4    y5    y6    y7    y8    y9
 ##   <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span>
-## <span style='color: #555555;'>1</span>  0.85  0.3   0.08  0.07  0.97  0.31  0.14  0.19  0.72
-## <span style='color: #555555;'>2</span>  0.91  0.74  0.94  0.32  0.36  0.21  0.66  0.67  0.69
-## <span style='color: #555555;'>3</span>  0.48  0.95  0.28  0.47  0.22  0.16  0.36  0.77  0.41
-## <span style='color: #555555;'>4</span>  0.79  0.98  0     0.44  0.48  0.83  0.08  0.3   0.88
-## <span style='color: #555555;'>5</span>  0.63  0.26  0.09  0.88  0.25  0.84  0.69  0.92  0.75
+## <span style='color: #555555;'>1</span>  0.57  0.41  0.22  0.51  0.05  0.92  0.88  0.86  0.16
+## <span style='color: #555555;'>2</span>  0.2   0.12  0.21  0.45  0.95  0.24  0.05  0.6   0.15
+## <span style='color: #555555;'>3</span>  0.41  0.33  0.49  0.37  0.9   0.09  0.74  0.59  0.64
+## <span style='color: #555555;'>4</span>  0.43  0.03  0.56  0.32  0.97  0.23  0.63  0.59  0.03
+## <span style='color: #555555;'>5</span>  0.62  0.33  0.72  0.73  0.61  0.42  0.26  0.86  0.13
 </code></pre>
 
 You can also use `predict`, like in ordinary linear models, and can draw

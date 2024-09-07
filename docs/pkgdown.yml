@@ -3,4 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   demo: demo.html
-last_built: 2024-09-06T03:09Z
+last_built: 2024-09-07T22:44Z
+urls:
+  reference: https://krisrs1128.github.io/miniLNM/reference
+  article: https://krisrs1128.github.io/miniLNM/articles
