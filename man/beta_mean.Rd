@@ -7,7 +7,7 @@
 beta_mean(fit)
 }
 \arguments{
-\item{fit}{An object of class \code{lnm} whose estimate slot contains the rstan
+\item{fit}{An object of class \code{lnm} whose estimate slot contains the 'rstan'
 fitted logistic normal multinomial model.}
 }
 \value{

@@ -14,7 +14,7 @@ distribution. By fitting the LNM model to observed data, we can infer the
 effects of the covariates on the outcome compositions.
 }
 \details{
-This class combines all information into fourthree slots:
+This class combines all information into three slots:
 }
 \section{Slots}{
 

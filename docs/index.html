@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Miniature Logistic-Normal Multinomial Models">
-<meta name="description" content='Logistic-normal Multinomial models are common in problems with multivariate count data. This package gives a simple implementation with a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects, in particular for downstream tasks that require analysis of "compositional" data. It can be applied whenever a multinomial probability parameter is thought to depend linearly on inputs in a transformed, log ratio space.'>
-<meta property="og:description" content='Logistic-normal Multinomial models are common in problems with multivariate count data. This package gives a simple implementation with a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects, in particular for downstream tasks that require analysis of "compositional" data. It can be applied whenever a multinomial probability parameter is thought to depend linearly on inputs in a transformed, log ratio space.'>
+<meta name="description" content='Logistic-normal Multinomial (LNM) models are common in problems with multivariate count data. This package gives a simple implementation with a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects, in particular for downstream tasks that require analysis of "compositional" data. It can be applied whenever a multinomial probability parameter is thought to depend linearly on inputs in a transformed, log ratio space. Additional utilities make it easy to inspect, create predictions, and draw samples using the fitted models. More about the LNM can be found in Xia et al. (2013) "A Logistic Normal Multinomial Regression Model for Microbiome Compositional Data Analysis" &lt;doi:10.1111/biom.12079&gt; and Sankaran and Holmes (2023) "Generative Models: An Interdisciplinary Perspective" &lt;doi:10.1146/annurev-statistics-033121-110134&gt;.'>
+<meta property="og:description" content='Logistic-normal Multinomial (LNM) models are common in problems with multivariate count data. This package gives a simple implementation with a 30 line Stan script. This lightweight implementation makes it an easy starting point for other projects, in particular for downstream tasks that require analysis of "compositional" data. It can be applied whenever a multinomial probability parameter is thought to depend linearly on inputs in a transformed, log ratio space. Additional utilities make it easy to inspect, create predictions, and draw samples using the fitted models. More about the LNM can be found in Xia et al. (2013) "A Logistic Normal Multinomial Regression Model for Microbiome Compositional Data Analysis" &lt;doi:10.1111/biom.12079&gt; and Sankaran and Holmes (2023) "Generative Models: An Interdisciplinary Perspective" &lt;doi:10.1146/annurev-statistics-033121-110134&gt;.'>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -58,7 +58,7 @@
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>knitr<span class="sc">::</span>knit_hooks<span class="sc">$</span><span class="fu">set</span>(<span class="at">output =</span> miniLNM<span class="sc">::</span>ansi_aware_handler)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">options</span>(<span class="at">crayon.enabled =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>miniLNM is a lightweight package for fitting and using logistic-normal multinomial models. It wraps a simple Stan script (see <code>inst/stan/</code> folder in the <a href="https://github.com/krisrs1128/miniLNM" class="external-link">source code</a>) and defines an S4 class that makes it easy to specify, estimate, and draw samples from the fit. For example, you can use tidyselect syntax to relate multiple compositional outputs to a set of influential biological factors.</p>
+<p>miniLNM is a lightweight package for fitting and using logistic-normal multinomial models. It wraps a simple ‘Stan’ script (see <code>inst/stan/</code> folder in the <a href="https://github.com/krisrs1128/miniLNM" class="external-link">source code</a>) and defines an S4 class that makes it easy to specify, estimate, and draw samples from the fit. For example, you can use tidyselect syntax to relate multiple compositional outputs to a set of influential biological factors.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>example_data <span class="ot">&lt;-</span> <span class="fu">lnm_data</span>()</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(example_data[<span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"y"</span>)])</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lnm</span>(<span class="fu">starts_with</span>(<span class="st">"y"</span>) <span class="sc">~</span> <span class="fu">starts_with</span>(<span class="st">"x"</span>), xy)</span></code></pre></div>
@@ -70,8 +70,8 @@
 <span><span class="co">## Chain 1:</span></span>
 <span><span class="co">## Chain 1:</span></span>
 <span><span class="co">## Chain 1:</span></span>
-<span><span class="co">## Chain 1: Gradient evaluation took 0.000256 seconds</span></span>
-<span><span class="co">## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.56 seconds.</span></span>
+<span><span class="co">## Chain 1: Gradient evaluation took 0.003206 seconds</span></span>
+<span><span class="co">## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 32.06 seconds.</span></span>
 <span><span class="co">## Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">## Chain 1:</span></span>
 <span><span class="co">## Chain 1:</span></span>
@@ -85,24 +85,22 @@
 <span><span class="co">## Chain 1:</span></span>
 <span><span class="co">## Chain 1: Begin stochastic gradient ascent.</span></span>
 <span><span class="co">## Chain 1:   iter             ELBO   delta_ELBO_mean   delta_ELBO_med   notes</span></span>
-<span><span class="co">## Chain 1:    100       -11184.466             1.000            1.000</span></span>
-<span><span class="co">## Chain 1:    200        -6856.152             0.816            1.000</span></span>
-<span><span class="co">## Chain 1:    300        -6552.809             0.559            0.631</span></span>
-<span><span class="co">## Chain 1:    400        -6504.088             0.421            0.631</span></span>
-<span><span class="co">## Chain 1:    500        -6260.436             0.345            0.046</span></span>
-<span><span class="co">## Chain 1:    600        -6232.001             0.288            0.046</span></span>
-<span><span class="co">## Chain 1:    700        -6154.505             0.249            0.039</span></span>
-<span><span class="co">## Chain 1:    800        -6109.442             0.219            0.039</span></span>
-<span><span class="co">## Chain 1:    900        -6190.336             0.196            0.013</span></span>
-<span><span class="co">## Chain 1:   1000        -6038.314             0.179            0.025</span></span>
-<span><span class="co">## Chain 1:   1100        -5991.059             0.079            0.013</span></span>
-<span><span class="co">## Chain 1:   1200        -6007.286             0.017            0.013</span></span>
-<span><span class="co">## Chain 1:   1300        -5990.459             0.012            0.008   MEDIAN ELBO CONVERGED</span></span>
+<span><span class="co">## Chain 1:    100       -11758.981             1.000            1.000</span></span>
+<span><span class="co">## Chain 1:    200        -7210.902             0.815            1.000</span></span>
+<span><span class="co">## Chain 1:    300        -6537.465             0.578            0.631</span></span>
+<span><span class="co">## Chain 1:    400        -6378.312             0.440            0.631</span></span>
+<span><span class="co">## Chain 1:    500        -6340.350             0.353            0.103</span></span>
+<span><span class="co">## Chain 1:    600        -6251.900             0.296            0.103</span></span>
+<span><span class="co">## Chain 1:    700        -6199.291             0.255            0.025</span></span>
+<span><span class="co">## Chain 1:    800        -6177.029             0.224            0.025</span></span>
+<span><span class="co">## Chain 1:    900        -6143.302             0.200            0.014</span></span>
+<span><span class="co">## Chain 1:   1000        -6117.542             0.180            0.014</span></span>
+<span><span class="co">## Chain 1:   1100        -6157.149             0.081            0.008   MEDIAN ELBO CONVERGED</span></span>
 <span><span class="co">## Chain 1:</span></span>
 <span><span class="co">## Chain 1: Drawing a sample of size 1000 from the approximate posterior...</span></span>
 <span><span class="co">## Chain 1: COMPLETED.</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## Warning: Pareto k diagnostic value is 11.45. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.</span></span></code></pre></div>
-<p>The print method gives a concise summary of the fitted model, which is easier to read than the full Stan output.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## Warning: Pareto k diagnostic value is 12.45. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.</span></span></code></pre></div>
+<p>The print method gives a concise summary of the fitted model, which is easier to read than the full ‘Stan’ output.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>fit</span></code></pre></div>
 <pre class="r-output"><code><span><span class="co">## [LNM Model]</span></span>
 <span><span class="co">## Regression formula: y1 + y2 + y3 + y4 ... ~ x1 + x2 + x3 + x4 ...</span></span>
@@ -111,11 +109,11 @@
 <span><span class="co">## # A tibble: 5 × 9</span></span>
 <span><span class="co">##      y1    y2    y3    y4    y5    y6    y7    y8    y9</span></span>
 <span><span class="co">##           </span></span>
-<span><span class="co">## 1  0.57  0.41  0.22  0.51  0.05  0.92  0.88  0.86  0.16</span></span>
-<span><span class="co">## 2  0.2   0.12  0.21  0.45  0.95  0.24  0.05  0.6   0.15</span></span>
-<span><span class="co">## 3  0.41  0.33  0.49  0.37  0.9   0.09  0.74  0.59  0.64</span></span>
-<span><span class="co">## 4  0.43  0.03  0.56  0.32  0.97  0.23  0.63  0.59  0.03</span></span>
-<span><span class="co">## 5  0.62  0.33  0.72  0.73  0.61  0.42  0.26  0.86  0.13</span></span></code></pre>
+<span><span class="co">## 1  0.24  0.23  0.21  0.12  0.46  0.56  0.81  0.86  0.32</span></span>
+<span><span class="co">## 2  0.89  0.6   0.66  0.87  0.01  0.9   0.14  0.74  0.06</span></span>
+<span><span class="co">## 3  0.82  0.89  0.89  0.87 -0.02  0.34  0.61  0.59  0.63</span></span>
+<span><span class="co">## 4  0.31  0.95  0.53  0.39  0.12  0.27  0.8   0     0.11</span></span>
+<span><span class="co">## 5  0.23  0.14  0.11  0.2   0.95  0.73  0.33  0.45  0.63</span></span></code></pre>
 <p>You can also use <code>predict</code>, like in ordinary linear models, and can draw posterior predictive samples using <code>sample</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>y_star <span class="ot">&lt;-</span> <span class="fu">sample</span>(fit, <span class="at">depth =</span> <span class="dv">200</span>)</span></code></pre></div>

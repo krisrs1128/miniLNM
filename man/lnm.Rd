@@ -12,15 +12,15 @@ lnm(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...)
 \item{data}{A data frame containing the variables specified in the formula.}
 
 \item{sigma_b}{The prior standard deviation of the beta coefficients in the
-LNM model. See the stan code definition in inst/stan/lnm.stan for the full
-model specification.}
+LNM model. See the 'Stan' code definition in inst/stan/lnm.stan for the
+full model specification.}
 
 \item{l1}{The first inverse gamma hyperprior parameter for sigmas_mu.}
 
 \item{l2}{The first inverse gamma hyperprior parameter for sigmas_mu.}
 
 \item{...}{Additional arguments to be passed to the underlying vb() call from
-rstan.}
+'rstan'.}
 }
 \value{
 An object of class "lnm" representing the fitted LNM model.

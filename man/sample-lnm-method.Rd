@@ -22,6 +22,12 @@ during the original training.}
 \item{...}{Additional keyword arguments, for consistency with R's predict
 generic (never used).}
 }
+\value{
+A matrix of dimension \code{size} x \code{n_outcomes}, where each row
+represents one sample from the posterior predictive of the fitted
+logistic-normal multinomial model. Each row sums up to the depth argument,
+which defaults to 5e4.
+}
 \description{
 Given an input dataset, sample compositions that are consistent with the
 input. Specifically, this samples from a multinomial with mean

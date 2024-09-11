@@ -7,7 +7,7 @@
 beta_samples(fit, size = 1)
 }
 \arguments{
-\item{fit}{An object of class \code{lnm} whose estimate slot contains the rstan
+\item{fit}{An object of class \code{lnm} whose estimate slot contains the 'rstan'
 fitted logistic normal multinomial model.}
 
 \item{size}{The number of draws from the posterior to return.}
