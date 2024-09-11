@@ -6,7 +6,7 @@
     options(crayon.enabled = TRUE)
 
 miniLNM is a lightweight package for fitting and using logistic-normal
-multinomial models. It wraps a simple Stan script (see `inst/stan/`
+multinomial models. It wraps a simple ‘Stan’ script (see `inst/stan/`
 folder in the [source code](https://github.com/krisrs1128/miniLNM)) and
 defines an S4 class that makes it easy to specify, estimate, and draw
 samples from the fit. For example, you can use tidyselect syntax to
@@ -25,8 +25,8 @@ factors.
 ## Chain 1: 
 ## Chain 1: 
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 0.000256 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.56 seconds.
+## Chain 1: Gradient evaluation took 0.003206 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 32.06 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -40,28 +40,26 @@ factors.
 ## Chain 1: 
 ## Chain 1: Begin stochastic gradient ascent.
 ## Chain 1:   iter             ELBO   delta_ELBO_mean   delta_ELBO_med   notes 
-## Chain 1:    100       -11184.466             1.000            1.000
-## Chain 1:    200        -6856.152             0.816            1.000
-## Chain 1:    300        -6552.809             0.559            0.631
-## Chain 1:    400        -6504.088             0.421            0.631
-## Chain 1:    500        -6260.436             0.345            0.046
-## Chain 1:    600        -6232.001             0.288            0.046
-## Chain 1:    700        -6154.505             0.249            0.039
-## Chain 1:    800        -6109.442             0.219            0.039
-## Chain 1:    900        -6190.336             0.196            0.013
-## Chain 1:   1000        -6038.314             0.179            0.025
-## Chain 1:   1100        -5991.059             0.079            0.013
-## Chain 1:   1200        -6007.286             0.017            0.013
-## Chain 1:   1300        -5990.459             0.012            0.008   MEDIAN ELBO CONVERGED
+## Chain 1:    100       -11758.981             1.000            1.000
+## Chain 1:    200        -7210.902             0.815            1.000
+## Chain 1:    300        -6537.465             0.578            0.631
+## Chain 1:    400        -6378.312             0.440            0.631
+## Chain 1:    500        -6340.350             0.353            0.103
+## Chain 1:    600        -6251.900             0.296            0.103
+## Chain 1:    700        -6199.291             0.255            0.025
+## Chain 1:    800        -6177.029             0.224            0.025
+## Chain 1:    900        -6143.302             0.200            0.014
+## Chain 1:   1000        -6117.542             0.180            0.014
+## Chain 1:   1100        -6157.149             0.081            0.008   MEDIAN ELBO CONVERGED
 ## Chain 1: 
 ## Chain 1: Drawing a sample of size 1000 from the approximate posterior... 
 ## Chain 1: COMPLETED.
 </code></pre>
 
-    ## Warning: Pareto k diagnostic value is 11.45. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.
+    ## Warning: Pareto k diagnostic value is 12.45. Resampling is disabled. Decreasing tol_rel_obj may help if variational algorithm has terminated prematurely. Otherwise consider using sampling instead.
 
 The print method gives a concise summary of the fitted model, which is
-easier to read than the full Stan output.
+easier to read than the full ‘Stan’ output.
 
     fit
 
@@ -72,11 +70,11 @@ easier to read than the full Stan output.
 ## <span style='color: #555555;'># A tibble: 5 × 9</span>
 ##      y1    y2    y3    y4    y5    y6    y7    y8    y9
 ##   <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span> <span style='color: #555555; font-style: italic;'><dbl></span>
-## <span style='color: #555555;'>1</span>  0.57  0.41  0.22  0.51  0.05  0.92  0.88  0.86  0.16
-## <span style='color: #555555;'>2</span>  0.2   0.12  0.21  0.45  0.95  0.24  0.05  0.6   0.15
-## <span style='color: #555555;'>3</span>  0.41  0.33  0.49  0.37  0.9   0.09  0.74  0.59  0.64
-## <span style='color: #555555;'>4</span>  0.43  0.03  0.56  0.32  0.97  0.23  0.63  0.59  0.03
-## <span style='color: #555555;'>5</span>  0.62  0.33  0.72  0.73  0.61  0.42  0.26  0.86  0.13
+## <span style='color: #555555;'>1</span>  0.24  0.23  0.21  0.12  0.46  0.56  0.81  0.86  0.32
+## <span style='color: #555555;'>2</span>  0.89  0.6   0.66  0.87  0.01  0.9   0.14  0.74  0.06
+## <span style='color: #555555;'>3</span>  0.82  0.89  0.89  0.87 -<span style='color: #BB0000;'>0.02</span>  0.34  0.61  0.59  0.63
+## <span style='color: #555555;'>4</span>  0.31  0.95  0.53  0.39  0.12  0.27  0.8   0     0.11
+## <span style='color: #555555;'>5</span>  0.23  0.14  0.11  0.2   0.95  0.73  0.33  0.45  0.63
 </code></pre>
 
 You can also use `predict`, like in ordinary linear models, and can draw

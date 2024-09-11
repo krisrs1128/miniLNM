@@ -13,7 +13,7 @@ options(crayon.enabled = TRUE)
 ```
 
 miniLNM is a lightweight package for fitting and using logistic-normal multinomial
-models. It wraps a simple Stan script (see  `inst/stan/` folder in the [source code](https://github.com/krisrs1128/miniLNM))
+models. It wraps a simple 'Stan' script (see  `inst/stan/` folder in the [source code](https://github.com/krisrs1128/miniLNM))
 and defines an S4 class that makes it easy to specify, estimate, and draw
 samples from the fit. For example, you can use tidyselect syntax to relate
 multiple compositional outputs to a set of influential biological factors.
@@ -25,7 +25,7 @@ fit <- lnm(starts_with("y") ~ starts_with("x"), xy)
 ```
 
 The print method gives a concise summary of the fitted model, which is easier to
-read than the full Stan output.
+read than the full 'Stan' output.
 
 ```{r}
 fit
