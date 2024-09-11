@@ -14,12 +14,12 @@
 #' @param formula A formula specifying the model structure.
 #' @param data A data frame containing the variables specified in the formula.
 #' @param sigma_b The prior standard deviation of the beta coefficients in the
-#'   LNM model. See the stan code definition in inst/stan/lnm.stan for the full
-#'   model specification.
+#'   LNM model. See the 'Stan' code definition in inst/stan/lnm.stan for the
+#'   full model specification.
 #' @param l1 The first inverse gamma hyperprior parameter for sigmas_mu.
 #' @param l2 The first inverse gamma hyperprior parameter for sigmas_mu.
 #' @param ... Additional arguments to be passed to the underlying vb() call from
-#'     rstan.
+#'     'rstan'.
 #' @return An object of class "lnm" representing the fitted LNM model.
 #' @importFrom formula.tools lhs.vars
 #' @importFrom rstan vb
@@ -39,7 +39,7 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     ys <- lhs.vars(formula)
     x_data <- model_matrix_df(formula, data)
 
-    # fit model using stan
+    # fit model using 'Stan'
     data_list <- list(
         y = as.matrix(select(data, any_of(ys))),
         x = x_data,
@@ -99,7 +99,7 @@ model_matrix_df <- function(formula, data) {
 #' This is a helper function to form the design matrix for an LNM regression
 #' starting from a fitted model's formula object. It is an analog of
 #' model.matrix for the multiresponse setting.
-#' @param fit An object of class `lnm` whose estimate slot contains the rstan
+#' @param fit An object of class `lnm` whose estimate slot contains the 'rstan'
 #'   fitted logistic normal multinomial model.
 #' @param newdata A data.frame containing variables in the formula definition of
 #'   the fit, but which hasn't been converted into the matrix format needed for
@@ -129,7 +129,7 @@ prepare_newdata <- function(fit, newdata = NULL) {
 #' Average the samples for the beta parameter from the VB posterior mean. This
 #' is used to get predicted compositions when using `predict` on an lnm model.
 #'
-#' @param fit An object of class `lnm` whose estimate slot contains the rstan
+#' @param fit An object of class `lnm` whose estimate slot contains the 'rstan'
 #'   fitted logistic normal multinomial model.
 #' @return A matrix whose rows are predictors and columns are outcomes in the
 #'   beta parameter for the LNM model.
@@ -162,7 +162,7 @@ beta_mean <- function(fit) {
 #' This is used to simulate new compositions when using `sample` on an lnm
 #' model.
 #'
-#' @param fit An object of class `lnm` whose estimate slot contains the rstan
+#' @param fit An object of class `lnm` whose estimate slot contains the 'rstan'
 #'   fitted logistic normal multinomial model.
 #' @param size The number of draws from the posterior to return.
 #' @return A matrix whose rows are predictors and columns are outcomes in the
@@ -259,6 +259,10 @@ setMethod("predict", "lnm", lnm_predict)
 #'   simulated element.
 #' @param ... Additional keyword arguments, for consistency with R's predict
 #'   generic (never used).
+#' @return A matrix of dimension `size` x `n_outcomes`, where each row
+#'   represents one sample from the posterior predictive of the fitted
+#'   logistic-normal multinomial model. Each row sums up to the depth argument,
+#'   which defaults to 5e4.
 #' @examples
 #' example_data <- lnm_data(N = 50, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])

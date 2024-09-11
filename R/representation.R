@@ -8,7 +8,7 @@
 #' distribution. By fitting the LNM model to observed data, we can infer the
 #' effects of the covariates on the outcome compositions.
 #'
-#' This class combines all information into fourthree slots:
+#' This class combines all information into three slots:
 #'
 #' @slot estimate The fitted logistic normal multinomial model, with parameter B
 #'   relating covariates to outcome compositions.
