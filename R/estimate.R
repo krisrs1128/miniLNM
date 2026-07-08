@@ -22,7 +22,6 @@
 #'     'rstan'.
 #' @return An object of class "lnm" representing the fitted LNM model.
 #' @importFrom formula.tools lhs.vars
-#' @importFrom rstan vb
 #' @importFrom methods new
 #' @importFrom tidyselect any_of
 #' @examples
@@ -54,7 +53,7 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     # return as an lnm class
     new(
         "lnm",
-        estimate = vb(stanmodels$lnm, data_list, ...),
+        estimate = safe_vb_(stanmodels$lnm, data = data_list, ...),
         formula = formula,
         template = data
     )
