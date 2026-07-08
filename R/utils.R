@@ -10,14 +10,18 @@
 safe_vb_ <- function(object, ...) {
     ns <- asNamespace("loo")
     original_psis <- ns$psis
+
+    # this block only ever modifies `psis` from loo, and the modification is
+    # removed on.exit(), so this is not meant to modify any rstan in any larger
+    # process.
     on.exit({
         unlockBinding("psis", ns)
         assign("psis", original_psis, envir = ns)
         lockBinding("psis", ns)
     })
 
-    # calls original_psis directly (not loo::psis) so it isn't caught by its
-    # own patched binding once installed below
+    # calls original_psis directly (not loo::psis) so it doesn't conflict with
+    # the patched version once installed below
     unlockBinding("psis", ns)
     assign("psis", function(...) {
         p <- original_psis(...)
