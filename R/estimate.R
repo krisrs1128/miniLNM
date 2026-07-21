@@ -25,11 +25,11 @@
 #' @importFrom methods new
 #' @importFrom tidyselect any_of
 #' @examples
-#' example_data <- lnm_data(N = 50, K = 10)
+#' example_data <- lnm_data(N = 200, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
-#'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 25, output_samples = 25
+#'     starts_with("y") ~ starts_with("x"), xy,
+#'     iter = 1000, output_samples = 200
 #' )
 #' @export
 lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
@@ -53,7 +53,7 @@ lnm <- function(formula, data, sigma_b = 2, l1 = 10, l2 = 10, ...) {
     # return as an lnm class
     new(
         "lnm",
-        estimate = safe_vb_(stanmodels$lnm, data = data_list, ...),
+        estimate = rstan::vb(stanmodels$lnm, data = data_list, ...),
         formula = formula,
         template = data
     )
@@ -106,11 +106,11 @@ model_matrix_df <- function(formula, data) {
 #' @return A matrix containing the design matrix that can be multiplied with the
 #'   fitted Beta parameter to get fitted compositions.
 #' @examples
-#' example_data <- lnm_data(N = 10, K = 5)
+#' example_data <- lnm_data(N = 200, K = 5)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
 #'     starts_with("y") ~ starts_with("x"), xy,
-#'     iter = 5, output_samples = 5
+#'     iter = 1000, output_samples = 200
 #' )
 #' prepare_newdata(fit, example_data[["X"]])
 #' @export
@@ -136,11 +136,11 @@ prepare_newdata <- function(fit, newdata = NULL) {
 #' @importFrom formula.tools lhs.vars rhs.vars
 #' @importFrom utils head
 #' @examples
-#' example_data <- lnm_data(N = 50, K = 10)
+#' example_data <- lnm_data(N = 200, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
-#'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 25, output_samples = 25
+#'     starts_with("y") ~ starts_with("x"), xy,
+#'     iter = 1000, output_samples = 200
 #' )
 #' beta_mean(fit)
 #' @export
@@ -167,11 +167,11 @@ beta_mean <- function(fit) {
 #' @return A matrix whose rows are predictors and columns are outcomes in the
 #'   beta parameter for the LNM model.
 #' @examples
-#' example_data <- lnm_data(N = 50, K = 10)
+#' example_data <- lnm_data(N = 200, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
-#'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 25, output_samples = 25
+#'     starts_with("y") ~ starts_with("x"), xy,
+#'     iter = 1000, output_samples = 200
 #' )
 #' beta_samples(fit, size = 2)
 #' @export
@@ -232,11 +232,11 @@ lnm_sample <- function(x, size = 1, depth = 5e4, newdata = NULL, ...) {
 #'   sum up to one.
 #' @export
 #' @examples
-#' example_data <- lnm_data(N = 50, K = 10)
+#' example_data <- lnm_data(N = 200, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
-#'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 25, output_samples = 25
+#'     starts_with("y") ~ starts_with("x"), xy,
+#'     iter = 1000, output_samples = 200
 #' )
 #' head(predict(fit))
 setMethod("predict", "lnm", lnm_predict)
@@ -247,7 +247,7 @@ setMethod("predict", "lnm", lnm_predict)
 #' input. Specifically, this samples from a multinomial with mean
 #' \eqn{\phi^{-1}(Bx)}. The default depth is 5e4. Modify the "depth" parameter
 #' to change this.
-#' 
+#'
 #' @param x An object of class lnm with fitted parameters \eqn{\hat{B}} and
 #'   which we want to use to form predictions on new samples.
 #' @param newdata New samples on which to form predictions. Defaults to NULL, in
@@ -263,11 +263,11 @@ setMethod("predict", "lnm", lnm_predict)
 #'   logistic-normal multinomial model. Each row sums up to the depth argument,
 #'   which defaults to 5e4.
 #' @examples
-#' example_data <- lnm_data(N = 50, K = 10)
+#' example_data <- lnm_data(N = 200, K = 10)
 #' xy <- dplyr::bind_cols(example_data[c("X", "y")])
 #' fit <- lnm(
-#'     starts_with("y") ~ starts_with("x"), xy, 
-#'     iter = 25, output_samples = 25
+#'     starts_with("y") ~ starts_with("x"), xy,
+#'     iter = 1000, output_samples = 200
 #' )
 #' head(sample(fit))
 #' @export
