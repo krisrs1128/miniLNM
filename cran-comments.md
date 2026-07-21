@@ -1,3 +1,8 @@
+## Update 0.1.2
+
+We reverted the `loo::psis()` rebinding approach on realizing that increasing
+the output sample size ensures the Pareto check tests pass.
+
 ## Update 0.1.1
 
 This version fixes a check failure that appeared in recent CRAN builds:
