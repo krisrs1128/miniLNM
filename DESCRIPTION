@@ -1,6 +1,6 @@
 Package: miniLNM
 Title: Miniature Logistic-Normal Multinomial Models
-Version: 0.1.1
+Version: 0.1.2
 Authors@R:
     person("Kris", "Sankaran", , "ksankaran@wisc.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9415-1971"))
@@ -18,7 +18,6 @@ Imports:
     fansi,
     formula.tools,
     glue,
-    loo,
     methods,
     posterior,
     rstan (>= 2.18.1),

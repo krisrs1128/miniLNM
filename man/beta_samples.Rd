@@ -22,11 +22,11 @@ This is used to simulate new compositions when using \code{sample} on an lnm
 model.
 }
 \examples{
-example_data <- lnm_data(N = 50, K = 10)
+example_data <- lnm_data(N = 200, K = 10)
 xy <- dplyr::bind_cols(example_data[c("X", "y")])
 fit <- lnm(
-    starts_with("y") ~ starts_with("x"), xy, 
-    iter = 25, output_samples = 25
+    starts_with("y") ~ starts_with("x"), xy,
+    iter = 1000, output_samples = 200
 )
 beta_samples(fit, size = 2)
 }
